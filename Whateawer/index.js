@@ -1,5 +1,12 @@
 const cityInput= document.getElementById('0')
 const button = document.getElementById('1')
+const card = document.getElementById('2')
+const cardsList = document.getElementById('3')
+
+const days = ['Monday','Tuesday','Wednesday','Thursday','Friday ','Saturday','Sunday']
+
+const imgRain = './Rain.png'
+const imgSun = './Sun.png'
 
 function getCityTemp(){
     const targetCity = cityInput.value
@@ -25,10 +32,41 @@ const options = {
 function zapros(city){
     fetch(`https://weatherapi-com.p.rapidapi.com/forecast.json?q=${city}&days=3`, options)
 	.then(response => response.json())
-	.then(response => console.log(response))
+
+	.then(response=>createWhtwrCards(response.forecast.forecastday))
 	.catch(err => console.error(err));
 }
 
+function createCardOneDay(day){
+
+
+	const date = new Date(day.date)
+	console.log(date.getDay())
+	const newCard = card.cloneNode(true)
+
+	if (day.day.avgtemp_c > 25){
+		newCard.style.backgroundImage= "url(./Sun.png)"
+	}
+	else{
+		newCard.style.backgroundImage= "url(./Rain.png)"
+	}
+	
+	newCard.getElementsByClassName('temp')[0].innerText = day.day.avgtemp_c
+	newCard.getElementsByClassName('wind')[0].innerText = day.day.maxwind_kph
+	newCard.getElementsByClassName('humidity')[0].innerText = day.day.avghumidity
+	newCard.getElementsByClassName('date')[0].innerText = days[date.getDay()]
+	cardsList.appendChild(newCard)
+
+}
+
+
+function  createWhtwrCards(list){
+	cardsList.replaceChildren()
+	console.log(list)
+	list.forEach(element => {
+		createCardOneDay(element)
+	});
+}
 
 
 /* 
@@ -37,4 +75,10 @@ function zapros(city){
 при нажатии на кнопку мы получаем значение из input
 полученное значение мы передаем в фунцию zapros, которая делает запрос и вывид в консоль результат
 
+*/
+
+
+/* при получении данных о прогнозе мы вызываем функцию createWhtwrCards которой передаем список
+прогноза на 3 дня, а затем для каждого дня вызываем функцию createCardOneDay
+в createCardOneDay мы копируем первую карточку и меняем содержимое элементов и задний фон
 */

@@ -4,6 +4,7 @@ background: #2200D0;
 background: -webkit-linear-gradient(left, #2200D0, #CC7EC3);
 background: -moz-linear-gradient(left, #2200D0, #CC7EC3);
 background: linear-gradient(to right, #2200D0, #CC7EC3);
+font-family: 'Montserrat', sans-serif;
 }
 
 *{
@@ -53,7 +54,7 @@ input:focus {
 .day{
     width:243px;
     height:332px;
-    background:gray;
+    color:black;
     position:relative;
     border-radius:10px;
 }
@@ -67,17 +68,27 @@ input:focus {
     line-height: 54px;
     letter-spacing: -0.02em;
     color:white;
+    color:black;
+}
+
+.temp::after{
+    content:"°";
+    width:5px;
+    height:5px;
+    color:black;
 }
 
 .info{
     position:absolute;
     bottom:0px;
     left:23px;
-    color:white;
+    color:black;
 }
 
 .pogodas{
+    color:black;
     margin-top:70px;
     display:flex;
+    justify-content:space-around;
     gap:10px;
 }
